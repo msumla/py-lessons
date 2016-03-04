@@ -5,15 +5,15 @@ class Readlog():
         import urllib
         import GeoIP
         
-#        fh = open("access.log")
         gi = GeoIP.open("GeoIP.dat", GeoIP.GEOIP_MEMORY_CACHE)
         keywords = "Windows", "Linux", "Mac", "Googlebot"
         d = {"Windows":0, "Linux":0, "Mac":0, "Googlebot":0} #a dictionary aka an array
         self.users = {}
         self.ips = {}
+        self.cntrs = {}
         win = 0
         total = 0
-		
+        
         for line in fh: #for each
             total = total + 1
             try:
@@ -22,10 +22,14 @@ class Readlog():
                 path = urllib.unquote(path)
                 
                 ip_address, _ , _, timestamp = source_timestamp.split(" ", 3)
+                gef = gi.country_code_by_addr(ip_address)
+                if not type(gef) == "NoneType":
+                    gef = gef.lower()
                 if not ":" in ip_address:
                     self.ips[ip_address] = self.ips.get(ip_address, 0) + 1
-                    print(ip_address, " @ ", gi.country_code_by_addr(ip_address))
-#                if path.startswith("/~"):
+                    self.cntrs[gef] = self.cntrs.get(gef, 0) + 1
+#                    print(ip_address, " @ ", gi.country_code_by_addr(ip_address).lower())
+#                if path.staswith("/~"):
 #                    username, remainder = path[2:].split("/", 1)
 #                    try:
 #                        self.users[username] += 1
@@ -41,7 +45,7 @@ class Readlog():
 #                 print osetc
 #                if "Windows" in agent: #ctrl+f
 #                    win += 1
-            except ValueError, KeyError:
+            except:
                 pass #mandatory syntax, doesn't do anthing
               
 
@@ -52,23 +56,8 @@ class Readlog():
         totalos = d["Windows"]+d["Linux"]+d["Mac"]+d["Googlebot"] #or:
         totalos = sum(d.values())
 
-#        l = self.users.items()
-#        print(l)
-
 #        for key, value in d.items():
 #            print key, "==>", value, "(", value * 100 / totalos, "%)" #or:
 #            print "%s ==> %d (%.02f%%)" % (key, value, value * 100.0 / totalos) # formatting
 #            print "%.03s" % totalos # 3 characters displayed
 
-
-        # sorting:
-        # d = {}
-        # d["Essa"] = 2  d["Tessa"] = 1
-        # l = d.items()
-        # l.sort(key = lambda t:t[1], reverse=True)
-
-
-        # what is the most 
-        # visited URL?
-        # used user agent?
-        # used OS
