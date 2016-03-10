@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="description" content="Introduction to this guy's website">
+    <title>Python html output 1.0</title>
+    <link rel="css/style.css" type="text/css"/>
+    <script type="text/javascript" src="js/main.js"></script>
+  </head>
+  <body>
+  	<h1>
+  		The top bandwidth loggers are:
+	<ul>
+		{% for user, bytes in user_bytes %}
+			<li>{(user)}: {}
+	</ul>
+  	</h1>
+
+  </body>
+</html>
