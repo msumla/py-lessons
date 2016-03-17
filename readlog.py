@@ -29,12 +29,12 @@ class Readlog():
                     self.ips[ip_address] = self.ips.get(ip_address, 0) + 1
                     self.cntrs[gef] = self.cntrs.get(gef, 0) + 1
 #                    print(ip_address, " @ ", gi.country_code_by_addr(ip_address).lower())
-#                if path.staswith("/~"):
-#                    username, remainder = path[2:].split("/", 1)
-#                    try:
-#                        self.users[username] += 1
-#                    except:
-#                        self.users[username] = 1
+                if ("/~") in path:
+                    username, remainder = path[2:].split("/", 1)
+                    try:
+                        self.users[username] += 1
+                    except:
+                        self.users[username] = 1
 
 #                for keyword in keywords: #for each
 #                    if keyword in agent: #ctrl+f
@@ -53,8 +53,8 @@ class Readlog():
         #print "Windows requests: ", win
         #print "Windows requests: %.02f%%" % (win * 100.0 / total), "of total"
 
-        totalos = d["Windows"]+d["Linux"]+d["Mac"]+d["Googlebot"] #or:
-        totalos = sum(d.values())
+#       totalos = d["Windows"]+d["Linux"]+d["Mac"]+d["Googlebot"] #or:
+#        totalos = sum(d.values())
 
 #        for key, value in d.items():
 #            print key, "==>", value, "(", value * 100 / totalos, "%)" #or:
